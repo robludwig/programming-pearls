@@ -13,19 +13,35 @@ in x, otherwise 0<=p<=n and t=x[p].
 
 '''
 
+import random
+
 def binary_search(array, target):
 	search_range = (0, len(array))
 	def range_empty():
 		return (search_range[1] - search_range[0]) <= 0
+	def range_middle():
+		return (search_range[1] - search_range[0])/2
 	while not range_empty():
-		middle = 
+		middle = range_middle()
+		if (array[middle] == target):
+			print "target found!"
+			return middle
+		return middle
 		if range_empty():
 			return -1
 		
 
-		
-		
+def generate_random_array(array_length, max_element):
+        rand_array = []
+        for i in range(array_length):
+                rand_array.append(random.randint(0, max_element))
+        return sorted(rand_array)
+
+def python_binary_search(array, target):
+        if target in array:
+                return array.index(target)
+        return -1
 
 
-tester = [0,1,2,3,4,5,6,7,8,9,10]
-print binary_search(tester, 5)
+		
+
