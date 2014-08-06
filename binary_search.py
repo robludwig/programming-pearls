@@ -20,15 +20,20 @@ def binary_search(array, target):
     def range_empty():
         return (search_range[1] - search_range[0]) <= 0
     def range_middle():
-        return (search_range[1] - search_range[0])/2
+        return (search_range[1] + search_range[0])/2
+    middle = range_middle()
     while not range_empty():
         middle = range_middle()
+        print "beginning another iteration, range is", search_range, "middle is ", middle, "middle value", array[middle]
+        raw_input()
         if (array[middle] == target):
             print "target found!"
             return middle
         elif array[middle] < target:
+            print "middle was less than target, adjusting the lower bound up"
             search_range[0] = middle + 1
         elif array[middle] > target:
+            print "middle was greater than target, adjusting the lower bound down"
             search_range[1] = middle - 1
 
         if range_empty():
@@ -46,7 +51,8 @@ def python_binary_search(array, target):
                 return array.index(target)
         return -1
 
-test_array = generate_random_array(5000, 7000)
+test_array = generate_random_array(15, 45)
 target = random.choice(test_array)
+print "looking for ", target, " in ", test_array
 print "python search result: ", python_binary_search(test_array, target)
 print "my search result: ", binary_search(test_array, target)
