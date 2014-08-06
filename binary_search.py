@@ -16,20 +16,24 @@ in x, otherwise 0<=p<=n and t=x[p].
 import random
 
 def binary_search(array, target):
-	search_range = (0, len(array))
-	def range_empty():
-		return (search_range[1] - search_range[0]) <= 0
-	def range_middle():
-		return (search_range[1] - search_range[0])/2
-	while not range_empty():
-		middle = range_middle()
-		if (array[middle] == target):
-			print "target found!"
-			return middle
-		return middle
-		if range_empty():
-			return -1
-		
+    search_range = [0, len(array)]
+    def range_empty():
+        return (search_range[1] - search_range[0]) <= 0
+    def range_middle():
+        return (search_range[1] - search_range[0])/2
+    while not range_empty():
+        middle = range_middle()
+        if (array[middle] == target):
+            print "target found!"
+            return middle
+        elif array[middle] < target:
+            search_range[0] = middle + 1
+        elif array[middle] > target:
+            search_range[1] = middle - 1
+
+        if range_empty():
+            return -1
+        
 
 def generate_random_array(array_length, max_element):
         rand_array = []
@@ -42,6 +46,7 @@ def python_binary_search(array, target):
                 return array.index(target)
         return -1
 
-
-		
-
+test_array = generate_random_array(5000, 7000)
+target = random.choice(test_array)
+print "python search result: ", python_binary_search(test_array, target)
+print "my search result: ", binary_search(test_array, target)
