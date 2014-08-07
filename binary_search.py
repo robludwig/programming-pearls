@@ -24,35 +24,64 @@ def binary_search(array, target):
     middle = range_middle()
     while not range_empty():
         middle = range_middle()
-        print "beginning another iteration, range is", search_range, "middle is ", middle, "middle value", array[middle]
-        raw_input()
+        #print "beginning another iteration, range is", search_range, "middle is ", middle, "middle value", array[middle]
+        #raw_input()
         if (array[middle] == target):
-            print "target found!"
+            #print "target found!"
             return middle
         elif array[middle] < target:
-            print "middle was less than target, adjusting the lower bound up"
+            #print "middle was less than target, adjusting the lower bound up"
             search_range[0] = middle + 1
         elif array[middle] > target:
-            print "middle was greater than target, adjusting the lower bound down"
+            #print "middle was greater than target, adjusting the lower bound down"
             search_range[1] = middle - 1
 
         if range_empty():
+            if array[0] == target:
+                return 0
+            elif array[search_range[1]] == target:
+                return search_range[1]
+            #print "empty range, returning -1"
             return -1
+    return -1
         
 
 def generate_random_array(array_length, max_element):
         rand_array = []
         for i in range(array_length):
-                rand_array.append(random.randint(0, max_element))
+            rand_array.append(random.randint(0, max_element))
         return sorted(rand_array)
 
-def python_binary_search(array, target):
+def python_array_search(array, target):
         if target in array:
-                return array.index(target)
+            return array.index(target)
         return -1
 
-test_array = generate_random_array(15, 45)
-target = random.choice(test_array)
-print "looking for ", target, " in ", test_array
-print "python search result: ", python_binary_search(test_array, target)
-print "my search result: ", binary_search(test_array, target)
+def test(trials = 100, array_length = 5000):
+    max_target = 10000
+    for i in range(trials):
+        print "begin test ", i
+        test_array = generate_random_array(array_length, max_target)
+        target = random.choice(range(max_target)) #have the possiblity that the target is not in the array
+        python_result = python_array_search(test_array, target)
+        my_result = binary_search(test_array, target)
+        if my_result != python_result:
+            if test_array[my_result] != target:
+                print "test failed!!!"
+                print "python returned", python_result, "i returned", my_result
+                return False
+            elif test_array[my_result] == test_array[python_result]:
+                print "different indexes, but both found it"
+        else:
+            print "found it!"
+            
+    return True
+
+if __name__ == '__main__':
+    test()
+
+##test_array = generate_random_array(15, 45)
+##target = random.choice(test_array)
+##print "looking for ", target, " in ", test_array
+##print "python search result: ", python_array_search(test_array, target)
+##print "my search result: ", binary_search(test_array, target)
