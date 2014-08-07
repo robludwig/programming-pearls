@@ -36,7 +36,7 @@ def binary_search(array, target):
             #print "middle was greater than target, adjusting the lower bound down"
             search_range[1] = middle - 1
 
-        if range_empty():
+        if range_empty(): #test bounds before flunking out
             if array[0] == target:
                 return 0
             elif array[search_range[1]] == target:
